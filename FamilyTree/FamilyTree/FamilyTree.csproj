@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201709232247352_users.Designer.cs">
       <DependentUpon>201709232247352_users.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709241003185_usr.cs" />
+    <Compile Include="Migrations\201709241003185_usr.Designer.cs">
+      <DependentUpon>201709241003185_usr.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DegreeOfRelationship.cs" />
     <Compile Include="Models\FamilyMember.cs" />
@@ -283,6 +287,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709232247352_users.resx">
       <DependentUpon>201709232247352_users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709241003185_usr.resx">
+      <DependentUpon>201709241003185_usr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

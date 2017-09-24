@@ -13,22 +13,20 @@ namespace FamilyTree.Models
 
         public int UserId { get; set; }
 
-        [Required(ErrorMessage ="First Name is required.")]
+        [Display(Name ="First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Last Name is required.")]
+
+        [Display(Name = "Last Name")]
         public string LasttName { get; set; }
 
-        [Required(ErrorMessage ="Email is required.")]
-        [RegularExpression(@"^([\w-\.]+)@((\[[0-9]{1,3]\.)|(([\w-]+\.)+))([a-zA-Z{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Please enter valid email.")]
+
         public string Email { get; set; }
         
-        [Required(ErrorMessage ="Password is required.")]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
-        
-        [Compare("Password", ErrorMessage ="Please confirm your password.")]
-        [DataType(DataType.Password)]
+
+
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }    
     }
 }

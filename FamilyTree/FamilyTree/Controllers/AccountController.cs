@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FamilyTree.Models;
+using System.Security.Cryptography;
 
 namespace FamilyTree.Controllers
 {
@@ -21,32 +22,54 @@ namespace FamilyTree.Controllers
 
         public ActionResult Register()
         {
+        
+            if (Session["UserId"] != null)
+            {
+                return RedirectToAction("LoggedIn");
 
-            return View();
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
         public ActionResult Register(UserAccount userAccount)
         {
-            if (ModelState.IsValid)
-            {
                 using (OurDbContext db = new OurDbContext())
                 {
+                    System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                    byte[] bs = System.Text.Encoding.UTF8.GetBytes(userAccount.Password);
+                    bs = x.ComputeHash(bs);
+                    System.Text.StringBuilder s = new System.Text.StringBuilder();
+                    foreach (byte b in bs)
+                    {
+                        s.Append(b.ToString("x2").ToLower());
+                    }
+                    userAccount.Password = s.ToString();
+
                     db.userAccount.Add(userAccount);
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                ViewBag.Message = userAccount.Email + "succesfully registered.";
-
-            }
-
+                ViewBag.Message = userAccount.Email + " succesfully registered.";
+           
             return View();
         }
 
         //Login
         public ActionResult Login()
         {
-            return View();
+            if (Session["UserId"] != null)
+            {
+                return RedirectToAction("LoggedIn");
+              
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -54,6 +77,17 @@ namespace FamilyTree.Controllers
         {
             using (OurDbContext db = new OurDbContext())
             {
+                System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                byte[] bs = System.Text.Encoding.UTF8.GetBytes(user.Password);
+                bs = x.ComputeHash(bs);
+                System.Text.StringBuilder s = new System.Text.StringBuilder();
+                foreach (byte b in bs)
+                {
+                    s.Append(b.ToString("x2").ToLower());
+                }
+                user.Password = s.ToString();
+
+
                 var usr = db.userAccount.Single(u => u.Email == user.Email && u.Password == user.Password);
                 if(usr !=null)
                 {
